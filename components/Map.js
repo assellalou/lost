@@ -2,7 +2,7 @@ import { useContext, useRef, useEffect } from 'react';
 import { Flex, Tag } from '@chakra-ui/react';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
-import { CordContext } from '../Context/CordContext';
+import { CordContext } from '/Context/CordContext';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
