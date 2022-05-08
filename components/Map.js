@@ -29,15 +29,14 @@ const Map = () => {
         }),
       );
       map.current.resize();
-    } else {
-      map.current.on('move', () => {
-        setCordinates({
-          longitude: map.current.getCenter().lng.toFixed(4),
-          latitude: map.current.getCenter().lat.toFixed(4),
-          zoom: map.current.getZoom().toFixed(2),
-        });
-      });
     }
+    map.current.on('move', () => {
+      setCordinates({
+        longitude: map.current.getCenter().lng.toFixed(4),
+        latitude: map.current.getCenter().lat.toFixed(4),
+        zoom: map.current.getZoom().toFixed(2),
+      });
+    });
   });
 
   return (
