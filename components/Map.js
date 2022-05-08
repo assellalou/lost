@@ -1,7 +1,9 @@
 import { useContext, useRef, useEffect } from 'react';
 import { Flex, Tag } from '@chakra-ui/react';
 import mapboxgl from 'mapbox-gl';
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import { CordContext } from '../Context/CordContext';
+import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
@@ -17,7 +19,15 @@ const Map = () => {
         style: 'mapbox://styles/mapbox/streets-v11',
         center: [cordinates.longitude, cordinates.latitude],
         zoom: cordinates.zoom,
-      });
+      }).addControl(
+        new MapboxGeocoder({
+          accessToken: mapboxgl.accessToken,
+          mapboxgl: mapboxgl,
+          placeholder: 'Search for a place',
+          proximity: [cordinates.longitude, cordinates.latitude],
+          limit: 3,
+        }),
+      );
       map.current.resize();
     } else {
       map.current.on('move', () => {
@@ -39,22 +49,16 @@ const Map = () => {
         borderRadius: '4px',
       }}
     >
+      {/* Display Lat and Lng For Debuging purposes */}
       <Tag
         variant="outline"
-        colorScheme="blue"
+        colorScheme="red"
         size="sm"
-        style={{ position: 'absolute', top: 5, left: 5, zIndex: 1 }}
+        style={{ position: 'absolute', bottom: 10, right: 40, zIndex: 1 }}
       >
-        Longitude: {cordinates.longitude}
+        Latitude: {cordinates.latitude} Longitude: {cordinates.longitude}
       </Tag>
-      <Tag
-        variant="outline"
-        colorScheme="blue"
-        size="sm"
-        style={{ position: 'absolute', top: 5, right: 5, zIndex: 1 }}
-      >
-        Latitude: {cordinates.latitude}
-      </Tag>
+
       <div
         ref={mapContainer}
         style={{
