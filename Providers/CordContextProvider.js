@@ -5,7 +5,7 @@ export default function CordProvider({ children }) {
   const [cord, setCord] = useState({
     longitude: -5.8905,
     latitude: 33.6733,
-    zoom: 0,
+    zoom: 4,
   });
 
   useEffect(() => {

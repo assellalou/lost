@@ -64,13 +64,15 @@ const Found = () => {
           onChange={(e) => setType(e.target.value)}
           isInvalid={isError && !type}
         >
-          {Categories.map((category) =>
-            category.items.map((item) => (
-              <option key={item.id} value={item.name}>
-                {item.name}
-              </option>
-            )),
-          )}
+          {
+            category
+              ? Categories[category].types.map((type) => (
+                  <option key={type.id} value={type.id}>
+                    {type.name}
+                  </option>
+                ))
+              : null //if category is not selected, no types will be displayed
+          }
         </Select>
         <Input name="Longitude" type="hidden" value={cordinates.longitude} />
         <Input name="Latitude" type="hidden" value={cordinates.latitude} />
