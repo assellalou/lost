@@ -40,6 +40,7 @@ export async function getServerSideProps({ req }) {
           Latitude,
           Longitude,
         } = getUrlParams(body.toString());
+        await dbConnection();
         const item = new Item({
           SerialNumber,
           Type,
