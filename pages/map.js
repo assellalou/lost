@@ -1,5 +1,5 @@
-import Map from '/components/Map';
-import CordProvider from '/providers/CordContextProvider';
+import Map from '@components/Map';
+import CordProvider from '@providers/CordProvider';
 
 const mapPage = () => {
   return (

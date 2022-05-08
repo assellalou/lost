@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { CordContext } from '/Context/CordContext';
+import { CordContext } from '@context/CordContext';
 
 export default function CordProvider({ children }) {
   const [cord, setCord] = useState({

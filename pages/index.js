@@ -1,9 +1,9 @@
 import { Heading, Text, Container } from '@chakra-ui/react';
 import Head from 'next/head';
 import getRawBody from 'raw-body';
-import Item from '/models/Item';
-import LostFoundTabs from '/components/LostFoundTabs';
-import getUrlParams from '/helpers/urlParse';
+import Item from '@models/Item';
+import LostFoundTabs from '@components/LostFoundTabs';
+import getUrlParams from '@helpers/urlParse';
 
 export default function Home() {
   return (

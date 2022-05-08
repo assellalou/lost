@@ -1,7 +1,7 @@
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from '@chakra-ui/react';
-import CordProvider from '/providers/CordContextProvider';
-import Lost from './Lost';
-import Found from './Found';
+import CordProvider from '@providers/CordProvider';
+import Lost from '@components/Lost';
+import Found from '@components/Found';
 
 const LostFoundTabs = () => {
   return (

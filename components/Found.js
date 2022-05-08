@@ -10,11 +10,11 @@ import {
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { AddIcon } from '@chakra-ui/icons';
-import Categories from '/lib/categories';
-import { CordContext } from '/Context/CordContext';
+import Categories from '@lib/categories';
+import { CordContext } from '@context/CordContext';
 import { useContext, useState, useRef } from 'react';
 
-import Map from './Map';
+import Map from '@components/Map';
 const Found = () => {
   //inputs
   const [category, setCategory] = useState('');
