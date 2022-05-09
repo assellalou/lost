@@ -12,11 +12,13 @@ import {
 } from '@chakra-ui/react';
 import { Search2Icon } from '@chakra-ui/icons';
 import { useState } from 'react';
+import Categories from '@lib/categories';
 
 const Lost = () => {
   const [SerialNumber, setSerialNumber] = useState('');
   const [results, setResults] = useState(false);
   const toast = useToast();
+  const [loading, setLoading] = useState(false);
 
   const onClick = () => {
     if (!SerialNumber) {
@@ -29,6 +31,7 @@ const Lost = () => {
       });
       return;
     }
+    setLoading(true);
     fetch(`/api/items/${SerialNumber}`)
       .then((res) => res.json())
       .then(({ success, data }) => {
@@ -45,6 +48,7 @@ const Lost = () => {
           });
         }
       });
+    setLoading(false);
   };
 
   return (
@@ -61,6 +65,7 @@ const Lost = () => {
           colorScheme="teal"
           variant="outline"
           onClick={onClick}
+          isLoading={loading}
         >
           Search
         </Button>
@@ -80,8 +85,20 @@ const Lost = () => {
               ? results.map((result) => (
                   <Tr key={result.id}>
                     <Td>{result.SerialNumber}</Td>
-                    <Td>{result.Category}</Td>
-                    <Td>{result.Type}</Td>
+                    <Td>
+                      {
+                        Categories.find(
+                          (category) => category.id === result.Category,
+                        ).name
+                      }
+                    </Td>
+                    <Td>
+                      {
+                        Categories.find(
+                          (category) => category.id === result.Category,
+                        ).types.find((type) => type.id === result.Type).name
+                      }
+                    </Td>
                     <Td>{result.Description}</Td>
                   </Tr>
                 ))
