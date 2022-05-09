@@ -23,6 +23,7 @@ export default async function handler(req, res) {
           Description,
           Latitude,
           Longitude,
+          Zoom,
         } = req.body;
         const item = new Item({
           SerialNumber,
@@ -31,6 +32,7 @@ export default async function handler(req, res) {
           Description,
           Latitude,
           Longitude,
+          Zoom,
         });
         await item.save();
         res.status(201).json({ success: true, data: item });

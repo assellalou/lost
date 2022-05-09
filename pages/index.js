@@ -39,6 +39,7 @@ export async function getServerSideProps({ req }) {
           Description,
           Latitude,
           Longitude,
+          Zoom,
         } = getUrlParams(body.toString());
         await dbConnection();
         const item = new Item({
@@ -48,6 +49,7 @@ export async function getServerSideProps({ req }) {
           Description,
           Latitude,
           Longitude,
+          Zoom,
         });
         await item.save();
         return { props: { success: true } };

@@ -25,6 +25,10 @@ const ItemsSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  Zoom: {
+    type: Number,
+    required: true,
+  },
   Status: {
     type: String,
     required: true,

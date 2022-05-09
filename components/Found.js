@@ -17,10 +17,10 @@ import { useContext, useState, useRef } from 'react';
 import Map from '@components/Map';
 const Found = () => {
   //inputs
-  const [category, setCategory] = useState('');
-  const [type, setType] = useState('');
-  const [description, setDescription] = useState('');
-  const [serialNumber, setSerialNumber] = useState('');
+  const [Category, setCategory] = useState('');
+  const [Type, setType] = useState('');
+  const [Description, setDescription] = useState('');
+  const [SerialNumber, setSerialNumber] = useState('');
 
   const form = useRef();
 
@@ -31,7 +31,7 @@ const Found = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!category || !type || !description || !serialNumber) {
+    if (!Category || !Type || !Description || !SerialNumber) {
       toast({
         title: 'Error',
         description: 'Please fill all the fields!',
@@ -40,7 +40,47 @@ const Found = () => {
         isClosable: true,
       });
       setIsError(true);
-    } else form.current.submit();
+      return;
+    } else {
+      fetch('/api/items', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          Category,
+          Type,
+          Description,
+          SerialNumber,
+          Latitude: cordinates.latitude,
+          Longitude: cordinates.longitude,
+          Zoom: cordinates.zoom,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success) {
+            form.current.reset();
+            setIsError(false);
+            toast({
+              title: 'Success',
+              description: 'Item added successfully!',
+              status: 'success',
+              duration: 3000,
+              isClosable: true,
+            });
+          }
+        })
+        .catch((err) => {
+          toast({
+            title: 'Error',
+            description: 'Something went wrong!',
+            status: 'error',
+            duration: 3000,
+            isClosable: true,
+          });
+        });
+    }
   };
 
   return (
@@ -50,11 +90,11 @@ const Found = () => {
           placeholder="Select a Category"
           name="Category"
           onChange={(e) => setCategory(e.target.value)}
-          isInvalid={isError && !category}
+          isInvalid={isError && !Category}
         >
-          {Categories.map((category) => (
-            <option key={category.id} value={category.id}>
-              {category.name}
+          {Categories.map((Category) => (
+            <option key={Category.id} value={Category.id}>
+              {Category.name}
             </option>
           ))}
         </Select>
@@ -62,11 +102,11 @@ const Found = () => {
           placeholder="Select a Type"
           name="Type"
           onChange={(e) => setType(e.target.value)}
-          isInvalid={isError && !type}
+          isInvalid={isError && !Type}
         >
           {
-            category
-              ? Categories[category].types.map((type) => (
+            Category
+              ? Categories[Category].types.map((type) => (
                   <option key={type.id} value={type.id}>
                     {type.name}
                   </option>
@@ -81,14 +121,14 @@ const Found = () => {
           placeholder="Enter the serial Number!"
           name="SerialNumber"
           onChange={(e) => setSerialNumber(e.target.value)}
-          isInvalid={isError && !serialNumber}
+          isInvalid={isError && !SerialNumber}
         />
         <Map />
         <Textarea
           placeholder="Description"
           name="Description"
           onChange={(e) => setDescription(e.target.value)}
-          isInvalid={isError && !description}
+          isInvalid={isError && !Description}
         />
         <Text fontSize="xs" color="gray.500">
           By adding a lost item you agree to our{' '}
